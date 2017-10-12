@@ -1,20 +1,31 @@
 var demo = {};
 var robot;
-var speed=4;
+var speed=8;
 demo.state0 = function() {};
 demo.state0.prototype = {
 	preload :function() {
-		game.load.image('robot', 'recursos/imagenes/robotx.png', 320,320)
-
+		game.load.image('robot', 'recursos/imagenes/robotx.png')
+		game.load.image('fondo', 'recursos/imagenes/FONDO.png')
 	},
 	create :function() {
 		game.stage.backgroundColor = "#11234F";
 		console.log('state0');
 		addChangeStateEventListeners();
+
+		
+
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		var fondo=game.add.sprite(0, 0,'fondo');
+		game.world.setBounds(0, 0, 1500, 1000);
 		robot= game.add.sprite(650, 400, 'robot');
 		robot.anchor.x = 0.5;
 		robot.anchor.y = 0.5;
+		robot.scale.setTo(0.7, 0.7)
+
+		game.camera.follow(robot);
+		game.camera.deadzone = new Phaser.Rectangle(100,100,750,1000);
+
+
 	},
 	update :function() {
 
@@ -22,6 +33,7 @@ demo.state0.prototype = {
 			robot.x +=speed;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			robot.x -=speed;
+			robot.scale.setTo(-0.7, 0.7)
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
 			robot.y +=speed;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
